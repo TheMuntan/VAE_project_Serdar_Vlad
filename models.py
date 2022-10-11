@@ -112,21 +112,33 @@ class Decoder(nn.Module):
         """TODO: define your layers here, as described in the assignment."""
         super(Decoder, self).__init__()
 
-        # Convolutional block
+        # Linear block
         self.decoder_lin = nn.Sequential(
-
+        nn.Linear(config["latent_dim"], 128),
+        nn.ReLU(),
+        nn.Linear(128, 288),
+        nn.ReLU()
         )
 
         # Unflatten layer
+        self.decoder_unflatten = nn.Unflatten(1, (3, 3, 32))
 
         # Deconvolutional block
         self.decoder_conv = nn.Sequential(
-
+        nn.ConvTranspose2d(32,16,3,0),
+        nn.ReLU(),
+        nn.ConvTranspose2d(16,8,3,2),
+        nn.ReLU(),
+        nn.ConvTranspose2d(8,1,3,2),
+        nn.Sigmoid()
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """TODO: implement the forward method."""
-
+        x = self.decoder_lin(x)
+        x = self.decoder_unflatten(x)
+        x = self.decoder_conv(x)
+        
         return x
 
 
