@@ -123,15 +123,15 @@ class Decoder(nn.Module):
         )
 
         # Unflatten layer
-        self.decoder_unflatten = nn.Unflatten(1, (3, 3, 32))
+        self.decoder_unflatten = nn.Unflatten(1, (32, 3, 3))
 
         # Deconvolutional block
         self.decoder_conv = nn.Sequential(
-        nn.ConvTranspose2d(32,16,3,2,0),
+        nn.ConvTranspose2d(32,16,3,2,0,output_padding=0),
         nn.ReLU(),
-        nn.ConvTranspose2d(16,8,3,2,1),
+        nn.ConvTranspose2d(16,8,3,2,1,output_padding=1),
         nn.ReLU(),
-        nn.ConvTranspose2d(8,1,3,2,1),
+        nn.ConvTranspose2d(8,1,3,2,1,output_padding=1),
         nn.Sigmoid()
         )
 
