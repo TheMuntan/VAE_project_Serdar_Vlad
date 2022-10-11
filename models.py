@@ -74,18 +74,29 @@ class Encoder(nn.Module):
 
         ### Convolutional block
         self.encoder_cnn = nn.Sequential(
-
+        nn.Conv2d(1,8,3,2,1),
+        nn.ReLU(),
+        nn.Conv2d(8,16,3,2,1),
+        nn.ReLU(),
+        nn.Conv2d(16,32,3,2,0),
+        nn.ReLU()
         )
 
         ### Flatten layer
-
+        self.encoder_flatten = nn.Flatten(1)
         ### Linear block
         self.encoder_lin = nn.Sequential(
-
+        nn.Linear(288,128),
+        nn.ReLU(),
+        nn.Linear(128,config["latent_dim"]),
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """TODO: implement the forward method."""
+        x = self.encoder_cnn(x)
+        x = self.encoder_flatten(x)
+        x = self.encoder_lin(x)
+        
 
         return x
 
