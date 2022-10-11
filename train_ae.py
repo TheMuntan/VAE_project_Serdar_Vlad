@@ -23,7 +23,8 @@ wandb.init(project="VAE_project", entity="vladart", name=config["name"] + "_trai
 dataset = Dataset(config)
 
 # TODO: define and train the model. Use the function from utils.py
-model = None
+model = VanillaAutoEncoder(config)
+train_autoencoder(model, config, dataset, torch.optim.Adam(model.parameters(), lr=0.01))
 
 # save the model
 save(model, config)
