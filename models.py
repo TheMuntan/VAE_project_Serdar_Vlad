@@ -29,6 +29,8 @@ class VanillaAutoEncoder(nn.Module):
         self.decoder = Decoder(config)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = self.encoder(x)
+        x = self.decoder(x)
         return x
 
     def generate(self, latent_vector: torch.Tensor) -> torch.Tensor:
