@@ -49,7 +49,7 @@ class Dataset:
         """
         Show some examples of the selected dataset.
         """
-        wandb.init(project="VAE_project", entity="YOURNAME", name="Dataset_test")
+        wandb.init(project="VAE_project", entity="vladart", name="Dataset_test")
 
         examples = enumerate(self.train_loader)
         _, (example_data, example_targets) = next(examples)
