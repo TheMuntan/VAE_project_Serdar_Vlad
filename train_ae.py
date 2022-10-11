@@ -16,7 +16,7 @@ if config["device"] == "cuda" and torch.cuda.is_available():
 else:
     config["device"] = torch.device("cpu")
 
-wandb.init(project="VAE_project_Serdar_Vlad", entity="vladart", name=config["name"] + "_train")
+wandb.init(project="VAE_project_Serdar_Vlad", entity="vladart", name=config["name"] + "_train_6_epochs")
 
 # Let's first prepare the MNIST dataset,
 # run the test_dataset.py file to view some examples and see the dimensions of your tensor.
@@ -24,7 +24,8 @@ dataset = Dataset(config)
 
 # TODO: define and train the model. Use the function from utils.py
 model = VanillaAutoEncoder(config)
-train_autoencoder(model, config, dataset, torch.optim.Adam(model.parameters(), lr=0.01))
+optimizer = torch.optim.Adam(model.parameters(), lr=config["learning_rate"])
+train_autoencoder(model, config, dataset, optimizer)
 
 # save the model
 save(model, config)
