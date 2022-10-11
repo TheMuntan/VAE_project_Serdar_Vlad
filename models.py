@@ -127,11 +127,11 @@ class Decoder(nn.Module):
 
         # Deconvolutional block
         self.decoder_conv = nn.Sequential(
-        nn.ConvTranspose2d(32,16,3,0),
+        nn.ConvTranspose2d(32,16,3,2,0),
         nn.ReLU(),
-        nn.ConvTranspose2d(16,8,3,2),
+        nn.ConvTranspose2d(16,8,3,2,1),
         nn.ReLU(),
-        nn.ConvTranspose2d(8,1,3,2),
+        nn.ConvTranspose2d(8,1,3,2,1),
         nn.Sigmoid()
         )
 
