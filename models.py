@@ -156,16 +156,24 @@ class VariationalEncoder(nn.Module):
 
         ### Convolutional block
         self.encoder_cnn = nn.Sequential(
-
+        nn.Conv2d(1,8,3,2,1),
+        nn.ReLU(),
+        nn.Conv2d(8,16,3,2,1),
+        nn.ReLU(),
+        nn.Conv2d(16,32,3,2,0),
+        nn.ReLU()
         )
 
         ### Flatten layer
-
+        self.encoder_flatten = nn.Flatten(1)
         ### Linear block
         self.encoder_lin = nn.Sequential(
-
+        nn.Linear(3*3*32,128),
+        nn.ReLU(),
+        test
+        #nn.Linear(128,config["latent_dim"]) # = mu
         )
-        self.fc_mu = None
+        self.fc_mu = nn.Linear(128,config["latent_dim"])
         self.fc_log_var = None
 
     def forward(self, x: torch.Tensor) -> tuple:
