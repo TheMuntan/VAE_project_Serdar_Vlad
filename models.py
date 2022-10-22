@@ -170,11 +170,11 @@ class VariationalEncoder(nn.Module):
         self.encoder_lin = nn.Sequential(
         nn.Linear(3*3*32,128),
         nn.ReLU(),
-        test
+        
         #nn.Linear(128,config["latent_dim"]) # = mu
         )
         self.fc_mu = nn.Linear(128,config["latent_dim"])
-        self.fc_log_var = None
+        self.fc_log_var = nn.Linear(128,config["latent_dim"])
 
     def forward(self, x: torch.Tensor) -> tuple:
         """
