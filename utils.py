@@ -76,7 +76,7 @@ def train_vae(model: VariationalAutoEncoder, options: dict, dataset: Dataset,
     TODO: Implement the code below.
     """
     # TODO: define the loss function.
-    distance = None
+    distance = nn.MSELoss()
 
     for epoch in range(options["num_epochs"]):
         for data in dataset.train_loader:
@@ -84,12 +84,16 @@ def train_vae(model: VariationalAutoEncoder, options: dict, dataset: Dataset,
             img = torch.Tensor(img).to(options["device"])
 
             # TODO: forward the image through the model.
+            reconstructed = model(img)
 
             # TODO: calculate the loss
-            loss = None
+            loss = calc_vae_loss(distance, reconstructed,img,options)
+            optimizer.zero_grad()
 
             # TODO: Backpropagate the loss through the model;
+            loss.backward()
             # TODO: use the optimizer in a correct way to update the weights.
+            optimizer.step()
 
         print('epoch [{}/{}], loss: {:.4f}'.format(epoch + 1, options["num_epochs"], loss.item()))
         recon = test_vae(model, dataset, options)
