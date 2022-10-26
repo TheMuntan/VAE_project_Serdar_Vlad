@@ -191,7 +191,7 @@ class VariationalEncoder(nn.Module):
         x = self.encoder_cnn(x)
         x = self.encoder_flatten(x)
         x = self.encoder_lin(x)
-        
-        mu = self.fc_mu(x) # COMMENT
-        log_var = self.fc_log_var(x) # COMMENT
+
+        mu = self.fc_mu(x) # Create a layer that calculates the mean (mu) of the output of the encoder
+        log_var = self.fc_log_var(x) # Create a layer that calculates the standard deviation (log_var) of the output of the encoder
         return reparameterize(mu, log_var), mu, log_var
