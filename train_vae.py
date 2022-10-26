@@ -23,7 +23,9 @@ wandb.init(project="VAE_project_Serdar_Vlad", entity="vladart", name=config["nam
 dataset = Dataset(config)
 
 # TODO: define and train the model. Use the function from utils.py
-model = None
+model = VariationalAutoEncoder(config)
+optimizer = torch.optim.Adam(model.parameters(), lr=config["learning_rate"])
+train_vae(model, config, dataset, optimizer)
 
 # save the model
 save(model, config)
