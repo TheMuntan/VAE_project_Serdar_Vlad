@@ -55,6 +55,11 @@ class VariationalAutoEncoder(nn.Module):
         """
         :rtype: tuple consisting of (decoded image, latent_vector, mu, log_var)
         """
+        latent_vector,mu,log_var = self.encoder(x)  # Returns 
+
+        x = self.decoder(latent_vector)
+
+        return x,latent_vector,mu,log_var
         pass
 
     def generate(self, latent_vector: torch.Tensor) -> torch.Tensor:
@@ -183,6 +188,10 @@ class VariationalEncoder(nn.Module):
         :rtype: tuple consisting of (latent vector, mu, log_var)
         """
         from utils import reparameterize
+        x = self.encoder_cnn(x)
+        x = self.encoder_flatten(x)
+        x = self.encoder_lin(x)
+        
         mu = self.fc_mu(x) # COMMENT
         log_var = self.fc_log_var(x) # COMMENT
         return reparameterize(mu, log_var), mu, log_var
