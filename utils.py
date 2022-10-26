@@ -110,7 +110,11 @@ def reparameterize(mu: torch.Tensor, log_var: torch.Tensor) -> torch.Tensor:
     onto a certain place in the latent space.
     TODO: Implement this below.
     """
-    pass
+    std = torch.exp(0.5 * log_var) # std is σ (sigma), lag_var is log(σ^2)
+    eps = torch.randn_like(std) # eps will be a tensor of the same size as std but as random numbers with a normal distribution with mean 0 and std 1
+    z = eps * std + mu # multiply std with eps to make std a normal distribution and add mu to have it be around mu
+    return z
+    pass 
 
 
 def save(model: nn.Module, config: dict):
