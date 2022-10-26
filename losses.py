@@ -16,5 +16,5 @@ def calc_vae_loss(distance: nn.Module, input: Tuple[torch.Tensor, torch.Tensor, 
     :rtype vae_loss: torch.Tensor
     """
     decoded_image, latent_vector, mu, log_var = input
-    return (distance(decoded_image, target) - (0.5 * (1 + log_var - mu*mu - torch.exp(log_var)).sum()))
+    return (distance(decoded_image, target) - options["lambda"]*(0.5 * (1 + log_var - mu*mu - torch.exp(log_var)).sum()))
     pass
