@@ -183,6 +183,6 @@ class VariationalEncoder(nn.Module):
         :rtype: tuple consisting of (latent vector, mu, log_var)
         """
         from utils import reparameterize
-        mu = None
-        log_var = None
+        mu = self.fc_mu(x) # COMMENT
+        log_var = self.fc_log_var(x) # COMMENT
         return reparameterize(mu, log_var), mu, log_var
